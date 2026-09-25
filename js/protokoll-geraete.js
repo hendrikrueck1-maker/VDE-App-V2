@@ -24,7 +24,8 @@ const BAUPLAN_GERAETE = {
         'STAM-01', 'STAM-01-a', 'STAM-02', 'STAM-08', 'STAM-22', 'STAM-23',
         { id:'STAM-05', anpassen:{ knopf:null, hinweis:'Beim Anlegen automatisch vergeben (GP/TT/MM/JJJJ/Nr.), nicht änderbar.' } },
         { id:'STAM-13', anpassen:{ options:['Erstprüfung (Gerät)','Wiederholungsprüfung (Gerät)','Prüfung nach Reparatur (Gerät)'] } },
-        { id:'STAM-14', anpassen:{ options:['DIN EN 50678 (ersetzt VDE 0701)','DIN EN 50699 (ersetzt VDE 0702)','DIN VDE 0701-0702'] } },
+        { id:'STAM-14', anpassen:{ options:['DIN EN 50678 (ersetzt VDE 0701)','DIN EN 50699 (ersetzt VDE 0702)','DIN VDE 0701-0702'],
+          hinweis:'Gerät: EN 50699 = Wiederholungsprüfung, EN 50678 = nach Reparatur/Änderung. „Welche Norm wann?“ erklärt alle Fälle.' } },
         'STAM-06', 'STAM-07',
         { id:'STAM-11', anpassen:{ pflicht:'Pflicht', hinweis:null } }, { id:'STAM-12', anpassen:{ pflicht:'Pflicht', hinweis:'Steht auf dem Typenschild des Gerätetesters.' } } ]},
 

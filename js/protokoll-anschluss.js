@@ -19,7 +19,7 @@ const BAUPLAN_ANSCHLUSS = {
     { id:'B1', titel:'Protokollkopf & Stammdaten',
       hinweis:'Vorbelegt aus den zentralen Stammdaten der Hauptseite. Änderungen hier gelten nur für dieses Protokoll.',
       felder:[
-        'STAM-01', 'STAM-01-a', 'STAM-02', 'STAM-03', 'STAM-08', 'STAM-22', 'STAM-23',
+        'STAM-01', 'STAM-01-a', 'STAM-02', 'STAM-08', 'STAM-22', 'STAM-23',
         { id:'STAM-05', anpassen:{ knopf:null, hinweis:'Beim Anlegen automatisch vergeben (ANS/TT/MM/JJJJ/Nr.), nicht änderbar.' } },
         { id:'STAM-13', anpassen:{ options:['Neuanlage','Bestand','Änderung','Wiederholung'] } },
         { id:'STAM-14', anpassen:{ options:['DIN VDE 0100-600','DIN VDE 0105-100','DIN VDE 0100-600 / 0105-100'] } },

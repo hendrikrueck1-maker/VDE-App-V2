@@ -21,7 +21,7 @@ const PDF_PLAN_ANSCHLUSS = {
   bloecke: [
     { art:'zellen', titel:'Auftraggeber, Übergabepunkt & Netz', zeilen:[
       [ { id:'STAM-01', b:2 }, { id:'STAM-01-a', b:2 } ],
-      [ { id:'STAM-02', b:1.2 }, { id:'STAM-03', b:1.4 }, { id:'STAM-08', b:0.8 }, { id:'STAM-06', b:1 } ],
+      [ { id:'STAM-02', b:2.6 }, { id:'STAM-08', b:0.8 }, { id:'STAM-06', b:1 } ],
       [ { id:'STAM-13', b:2, wahl:['Neuanlage','Bestand','Änderung','Wiederholung'] },
         { id:'STAM-14', b:2, wahl:['DIN VDE 0100-600','DIN VDE 0105-100','DIN VDE 0100-600 / 0105-100'], kurz:{ 'DIN VDE 0100-600 / 0105-100':'beide' } } ],
       [ { id:'STAM-07', b:1.25, wahl:['Elektrofachkraft','Unterwiesene Person'], kurz:{ 'Unterwiesene Person':'EuP' } },

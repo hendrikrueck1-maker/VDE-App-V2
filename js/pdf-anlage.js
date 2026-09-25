@@ -17,6 +17,7 @@ const PDF_PLAN_ANLAGE = {
   titel: 'PRÜFPROTOKOLL ELEKTRISCHER ANLAGEN',
   untertitel: 'Erst-, Wiederholungs- und Änderungsprüfung nach DIN VDE 0100-600 / DIN VDE 0105-100',
   datei: 'Pruefprotokoll_Anlage',
+  infoLabel: 'Bereich / Gebäude', infoFeld: 'STAM-02',
   KREISE_SEITE_1: 6,              /* oberstes Gebot: bis hier eine Seite */
   KREISE_LEER: 5,                 /* Zeilen im Leerformular (groß zum Schreiben) */
   hoehe: { zelle:7.4, zelleLeer:8.5, kreis:5.2, kreisLeer:9.8, check:4.3, checkLeer:4.4, unterschrift:17, bemerkungMin:3, bemerkungMinLeer:2 },
@@ -24,7 +25,7 @@ const PDF_PLAN_ANLAGE = {
   kaesten: [
     { titel:'Auftraggeber & Prüfung', zeilen:[
       [ { id:'STAM-01', b:2 }, { id:'STAM-01-a', b:2 } ],
-      [ 'STAM-02', 'STAM-03', { id:'STAM-04', b:0.8 }, { id:'STAM-08', b:0.8 } ],
+      [ { id:'STAM-02', b:2 }, { id:'STAM-04', b:1 }, { id:'STAM-08', b:1 } ],
       [ { id:'STAM-13', b:2, wahl:['Neuanlage','Bestand','Änderung','Wiederholung'] },
         { id:'STAM-14', b:2, wahl:['DIN VDE 0100-600','DIN VDE 0105-100','DIN VDE 0100-600 / 0105-100'], kurz:{ 'DIN VDE 0100-600 / 0105-100':'beide' } } ],
       [ { id:'STAM-06', b:1 }, { id:'STAM-07', b:1.25, wahl:['Elektrofachkraft','Unterwiesene Person'], kurz:{ 'Unterwiesene Person':'EuP' } },
@@ -223,7 +224,7 @@ const PdfAnlage = (function(){
       return PdfProtokoll.fotoListe(wk[F.feld], 'Stromkreis ' + (i + 1) + (name ? ' · ' + name : ''));
     })), F);
 
-    const r = PdfProtokoll.fertig(P, PL, pr, w, leer, arg, w('STAM-03'));
+    const r = PdfProtokoll.fertig(P, PL, pr, w, leer, arg, w('STAM-02'));
     return Object.assign(r, { kreise:n, seite1:k1, fotos:nFotos });
   }
 

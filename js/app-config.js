@@ -8,8 +8,8 @@
    Der Cache-Name enthält SW_VERSION → neue Version = neuer Offline-Cache.
    ========================================================================= */
 
-const APP_VERSION = '0.8.2';
-const SW_VERSION  = '0.8.2';
+const APP_VERSION = '0.8.3';
+const SW_VERSION  = '0.8.3';
 const SCHEMA_VERSION = 2;                 /* Format von Datenbank und Sicherungsdatei (2 = mit Archiv) */
 const APP_NAME = 'VDE Prüf App V2';
 const CACHE_PREFIX = 'vde2-cache-';
@@ -35,7 +35,7 @@ const PROTOKOLL_TYPEN = [
        Nie übernommen: Messwerte, Ergebnisse, Bemerkung, Unterschriften, Fotos, Prüfdatum, Nummer.
        Prüfer, Qualifikation und Prüfgerät kommen aus den aktuellen Stammdaten. */
     vorlage:{
-      felder:[ 'STAM-01','STAM-01-a','STAM-02','STAM-03','STAM-04','STAM-22',
+      felder:[ 'STAM-01','STAM-01-a','STAM-02','STAM-04','STAM-22',
                'NETZ-01','NETZ-02','NETZ-03','NETZ-04','NETZ-05','GEN-01','GEN-02','GEN-03','GEN-04','GEN-05',
                'NMESS-01-a','LTG-04','LTG-05','LTG-06','LTG-02','ERD-01','ERD-04' ],
       listeFelder:[ 'SK-01','LTG-04','LTG-06','LTG-02','RISO-01-a','ZNS-01-a',
@@ -44,10 +44,10 @@ const PROTOKOLL_TYPEN = [
       text:'Objekt, Netz & Einspeisung, Anschlusskabel und alle Stromkreise mit Kabel und Schutzeinrichtungen'
     } },
   { schluessel:'anschluss', name:'Prüfprotokoll Anschlussprüfung',     kurz:'Anschluss',
-    praefix:'ANS', zielseite:'anschlusspruefung.html', einheit:'Übergabepunkt', anzahlKey:null,
+    praefix:'ANS', zielseite:'anschlusspruefung.html', einheit:'Übergabepunkt', anzahlKey:null, feldObjekt:'STAM-20',
     beschreibung:'Ein Anschluss (Übergabepunkt) je Protokoll: Netzsystem, Netzmessung, Schleifenimpedanz, RCD.',
     vorlage:{
-      felder:[ 'STAM-01','STAM-01-a','STAM-02','STAM-03','STAM-04','STAM-22','STAM-16','STAM-18','STAM-19','STAM-20','STAM-21','NMESS-10',
+      felder:[ 'STAM-01','STAM-01-a','STAM-02','STAM-04','STAM-22','STAM-16','STAM-18','STAM-19','STAM-20','STAM-21','NMESS-10',
                'NETZ-01','NETZ-02','NETZ-03','NETZ-04','NETZ-05','GEN-01','GEN-02','GEN-03','GEN-04','GEN-05',
                'NMESS-01-a','LTG-04','LTG-05','LTG-06','LTG-02','RISO-01-a','ZNS-01-a',
                'RCD-01-a','RCD-01-b','RCD-01-c','RCD-01-c2','RCD-01-f','RCD-01-g','ERD-01','ERD-04' ],
@@ -126,7 +126,7 @@ const STAMMDATEN_FELDER = ['STAM-01','STAM-01-a','STAM-02','STAM-06','STAM-07','
 
 /* Felder, aus denen die Übersicht Prüfort und Anlage/Objekt zeigt */
 const FELD_PRUEFORT = 'STAM-01';
-const FELD_ANLAGE   = 'STAM-03';
+const FELD_ANLAGE   = 'STAM-02';     /* STAM-03 „Anlage / Objekt“ seit 0.8.3 in keinem Protokoll mehr */
 const FELD_PRUEFDATUM = 'STAM-08';     /* Monat im Archiv */
 
 /* ---------------- Archiv ----------------

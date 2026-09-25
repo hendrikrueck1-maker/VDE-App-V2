@@ -364,16 +364,19 @@ const ProtokollSeite = (function(){
      🟡 bei Bemerkung ohne Mangel · 🟢 sonst. Nie „grün", solange etwas ungeprüft ist. */
   function ampel(){
     const h = kopfHandles.find(x=>x.id === 'FIN-01');
-    const gruende = [];
+    const mangel = [];                                   /* [{ h, text }] – Sprungziele für die Statusleiste */
+    const neu = (x, text)=>mangel.push({ h:x, text });
     alleHandles().forEach(x=>{
       if(ausgeblendet(x) || x.eintrag.automatisch) return;
       const v = String(x.lesen() || '');
-      if(x.feld.kind === 'segmented' && (v === 'n.i.O.' || (x.feld.mangelWert && v === x.feld.mangelWert))) gruende.push(beschreibung(x) + ': ' + v);
-      if(x.eingabe && x.eingabe.classList.contains('out-of-norm')) gruende.push(beschreibung(x) + ': ' + v + ' außerhalb Grenzwert');
+      if(x.feld.kind === 'segmented' && (v === 'n.i.O.' || (x.feld.mangelWert && v === x.feld.mangelWert))) neu(x, beschreibung(x) + ': ' + v);
+      if(x.eingabe && x.eingabe.classList.contains('out-of-norm')) neu(x, beschreibung(x) + ': ' + v + ' außerhalb Grenzwert');
     });
-    const w = id => { const x = kopfHandles.find(y=>y.id === id); return x ? String(x.lesen() || '') : ''; };
-    if(/^Nein/.test(w('FIN-04'))) gruende.push('FIN-04: sicherer Gebrauch nicht gewährleistet');
-    if(w('FIN-02') === 'Mängel festgestellt (siehe Bemerkung)') gruende.push('FIN-02: Mängel festgestellt');
+    const kopf = id => kopfHandles.find(y=>y.id === id) || null;
+    const w = id => { const x = kopf(id); return x ? String(x.lesen() || '') : ''; };
+    if(/^Nein/.test(w('FIN-04'))) neu(kopf('FIN-04'), 'FIN-04: sicherer Gebrauch nicht gewährleistet');
+    if(w('FIN-02') === 'Mängel festgestellt (siehe Bemerkung)') neu(kopf('FIN-02'), 'FIN-02: Mängel festgestellt');
+    const gruende = mangel.map(m=>m.text);
     const fehlend = pflichtFehlend();
     const bemerkung = w('FIN-09').trim() !== '' || /behoben/.test(w('FIN-02'));
     let wert, text, art;
@@ -393,7 +396,8 @@ const ProtokollSeite = (function(){
       bem.eingabe.classList.toggle('bemerkung--mangel', !!gruende.length && w('FIN-09').trim() !== '');
       bem.eingabe.classList.toggle('bemerkung--hinweis', !gruende.length && w('FIN-09').trim() !== '');
     }
-    return { gruende, fehlend };
+    mangelMarkieren(mangel);
+    return { gruende, fehlend, mangel };
   }
 
   /* Widersprüche zur Ampel (Masterbibliothek: beiMangelNicht) – z. B. „Keine Mängel“ oder
@@ -430,11 +434,55 @@ const ProtokollSeite = (function(){
     $('p-fortschritt').className = 'status-chip' + (fehlend.length ? '' : ' status-chip--ok');
   }
 
-  function maengelAnzeigen(gruende){
+  /* Felder, die als Mangel zählen: roter Rand + Hinweis (wichtig bei einfarbigen Feldern wie ERD-01) */
+  function mangelMarkieren(mangel){
+    alleHandles().forEach(h=>{
+      const m = mangel.find(x=>x.h === h);
+      h.el.classList.toggle('feld--mangel', !!m);
+      let st = h.el.querySelector(':scope > .mangel-status');
+      const zeigen = m && h.feld.kind === 'segmented' && h.feld.einfarbig;   /* sonst zeigt das Feld den Mangel schon selbst */
+      if(zeigen && !st){ st = el('div', { class:'grenz-status grenz-status--fehler mangel-status' }); h.el.append(st); }
+      if(st) st.textContent = zeigen ? '✗ „' + h.lesen() + '“ zählt als Mangel.' : '';
+      if(st && !zeigen) st.remove();
+    });
+  }
+
+  /* Mängel-Chip in der Statusleiste: 1 Mangel → direkt hinspringen, mehrere → Liste zum Antippen */
+  let maengelAktuell = [];
+  function maengelAnzeigen(mangel){
+    maengelAktuell = mangel;
     const c = $('p-maengel'); if(!c) return;
-    c.hidden = !gruende.length;
-    c.textContent = '✗ ' + gruende.length + (gruende.length === 1 ? ' Mangel' : ' Mängel');
-    c.title = gruende.join('\n');
+    c.hidden = !mangel.length;
+    c.textContent = '✗ ' + mangel.length + (mangel.length === 1 ? ' Mangel' : ' Mängel') + ' ›';
+    c.title = mangel.map(m=>m.text).join('\n') + '\n\nAntippen, um hinzuspringen.';
+    const liste = $('p-maengel-liste');
+    if(liste && !liste.hidden) (mangel.length ? maengelListeFuellen(liste) : maengelListeSchliessen());
+  }
+  function maengelListeFuellen(liste){
+    liste.replaceChildren(
+      el('p', { class:'pflicht-liste-kopf', text: maengelAktuell.length + (maengelAktuell.length === 1 ? ' Mangel' : ' Mängel') + ' – antippen, um hinzuspringen:' }),
+      el('ul', {}, ...maengelAktuell.map(m=>el('li', {}, el('button', { type:'button', class:'pflicht-sprung', text:m.text,
+        onclick: ()=>{ maengelListeSchliessen(); if(m.h) springeZu(m.h); } })))));
+  }
+  function maengelListeSchliessen(){
+    const liste = $('p-maengel-liste'); if(liste) liste.hidden = true;
+    const c = $('p-maengel'); if(c) c.setAttribute('aria-expanded', 'false');
+  }
+  function maengelInit(){
+    const c = $('p-maengel'); if(!c) return;
+    c.setAttribute('aria-expanded', 'false');
+    const liste = el('div', { id:'p-maengel-liste', class:'maengel-liste meldung meldung--fehler pflicht-liste', hidden:true });
+    document.body.append(liste);                       /* fest unter der Statusleiste (die auf dem Handy seitlich scrollt) */
+    c.addEventListener('click', ev=>{
+      ev.stopPropagation();
+      if(maengelAktuell.length === 1 && maengelAktuell[0].h){ maengelListeSchliessen(); springeZu(maengelAktuell[0].h); return; }
+      if(!liste.hidden){ maengelListeSchliessen(); return; }
+      maengelListeFuellen(liste);
+      liste.style.top = Math.max(0, c.closest('.statusleiste').getBoundingClientRect().bottom + 4) + 'px';
+      liste.hidden = false; c.setAttribute('aria-expanded', 'true');
+    });
+    document.addEventListener('click', ev=>{ if(!liste.hidden && !liste.contains(ev.target)) maengelListeSchliessen(); });
+    document.addEventListener('keydown', ev=>{ if(ev.key === 'Escape') maengelListeSchliessen(); });
   }
 
   function aenderungNachlauf(){
@@ -447,7 +495,7 @@ const ProtokollSeite = (function(){
       if(wdh) reihenfolgeAktualisieren();
       const r = ampel();
       fortschritt(r.fehlend);
-      maengelAnzeigen(r.gruende);
+      maengelAnzeigen(r.mangel);
       widersprucheMarkieren(widersprueche(r.gruende));
       if(!$('pflicht-ergebnis').hidden) pflichtListeZeigen(r.fehlend, true);
     } finally { intern = alt; }
@@ -675,6 +723,7 @@ const ProtokollSeite = (function(){
   async function start(bauplan){
     B = bauplan;
     schalterInit();
+    maengelInit();
     const id = new URLSearchParams(location.search).get('entwurf');
     if(!id){ ohneEntwurf('Es ist kein Protokoll geöffnet. Starte ein neues Protokoll oder öffne ein vorhandenes über die Hauptseite.'); return; }
     let r;

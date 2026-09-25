@@ -111,7 +111,7 @@ const PdfProtokoll = (function(){
     const pr = arg.protokoll || {}, st = pr.stammdaten || {};
     const w = leer ? (()=>'') : leser(pr.daten || {}, id=>id === 'STAM-05' ? pr.nummer : st[id]);
     P.kopfDaten = { titel:plan.titel, untertitel:plan.untertitel, nummer: leer ? '' : pr.nummer,
-      infoLabel:plan.infoLabel, info: leer ? '' : w(infoId || plan.infoFeld || 'STAM-03') };
+      infoLabel:plan.infoLabel, info: leer ? '' : w(infoId || plan.infoFeld || FELD_ANLAGE) };
     let y = P.seiteNeu();
     if(!leer && arg.unvollstaendig){
       const nf = (arg.fehlend || []).length;

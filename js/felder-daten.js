@@ -60,7 +60,7 @@ const FIELDS = [
  inhalt:'Vom Nutzer gepflegte Liste',bedingung:'Liste über „Liste bearbeiten" pflegbar, gilt für alle Protokolle (Speicher: Browser).',
  kind:'text',ph:'editierbare Liste',datalist:['Hauptbühne','Studiobühne','Werkstatt'],editableList:true},
 {id:'STAM-03',name:'Anlage / Objekt',cat:'Stammdaten',typ:'Text',pflicht:'Pflicht',
- inhalt:'Freitext',bedingung:'—',kind:'text',ph:'Bezeichnung Anlage/Objekt'},
+ inhalt:'Freitext',bedingung:'Seit 0.8.3 in keinem Protokoll verwendet (Bereich = STAM-02).',kind:'text',ph:'Bezeichnung Anlage/Objekt'},
 {id:'STAM-04',name:'Prüflings-ID',cat:'Stammdaten',typ:'Text',pflicht:'Optional',
  inhalt:'Freitext',bedingung:'Gelb/grün markiert, technisch optional.',kind:'text',ph:'interne Kennung',markieren:true},
 {id:'STAM-05',name:'Protokoll-Nr.',cat:'Stammdaten',typ:'Text (automatisch)',pflicht:'Optional',
@@ -172,7 +172,7 @@ const FIELDS = [
 
 // ===== ERDUNG =====
 {id:'ERD-01',name:'Zusätzlicher Potenzialausgleich vorhanden',cat:'Erdung',typ:'Segmentiert',pflicht:'Pflicht',
- inhalt:'Ja / Nein',bedingung:'Nicht vorbelegt. „Nein“ = Mangel (zählt im Protokoll), wird aber farblich wie „Ja“ angezeigt.',kind:'segmented',options:['Ja','Nein'],name_group:'erd01',mangelWert:'Nein',einfarbig:true},
+ inhalt:'Ja / Nein',bedingung:'Nicht vorbelegt. „Nein“ ist KEIN Mangel – ein zusätzlicher Potenzialausgleich ist nicht überall vorhanden bzw. gefordert. Beide Antworten neutral (grün).',kind:'segmented',options:['Ja','Nein'],name_group:'erd01',einfarbig:true},
 {id:'ERD-02',erkl:'rlo',name:'Durchgängigkeit Potenzialausgleich',cat:'Erdung',typ:'Segmentiert',pflicht:'Pflicht',
  inhalt:'i.O. / n.i.O.',bedingung:'Nicht vorbelegt.',kind:'segmented',options:['i.O.','n.i.O.'],name_group:'erd02',info:'rlo'},
 {id:'ERD-03',erkl:'erdung',name:'Erdungswiderstand R_E',cat:'Erdung',typ:'Zahl',pflicht:'Pflicht',

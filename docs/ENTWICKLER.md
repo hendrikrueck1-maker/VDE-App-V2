@@ -131,7 +131,7 @@ js/lib/LiberationSans-OFL.txt  Lizenz der eingebetteten PDF-Schrift
 
 - „Ausgefülltes Protokoll erstellen" legt das PDF zusätzlich im Archiv ab (IndexedDB-Store `archiv`, ein Eintrag je Protokoll).
   Ein neues PDF desselben Protokolls ersetzt den Eintrag; der Entwurf bleibt bearbeitbar. Leerformulare kommen nicht ins Archiv.
-- Je Eintrag eingefroren: Nummer, Ort (STAM-01), Anlage (STAM-03), Anzahl Stromkreise, Prüfdatum/Monat (STAM-08),
+- Je Eintrag eingefroren: Nummer, Ort (STAM-01), Anlage/Objekt (objektFeld je Typ: Anlage STAM-02, Anschluss STAM-20, Gerät GER-02), Anzahl Stromkreise, Prüfdatum/Monat (STAM-08),
   Ergebnis **i.O.** / **n.i.O.** (Mängel laut Ampel-Logik) / **offen** (mit „Trotzdem erstellen" ohne Mangel – nie i.O.), Vorlage.
 - Filter: Suche (Nr./Ort/Anlage), Monat, Protokolltyp, Ergebnis. Liste nach Monat gruppiert.
 - **Ansehen** mit pdf.js im Vollbild (auch Android). **Teilen** öffnet das Teilen-Menü (WhatsApp, Mail …), danach Rückfrage

@@ -1,5 +1,14 @@
 # Änderungen
 
+## 0.8.3 – Mängel finden
+- Mängel-Chip in der Statusleiste antippen: bei einem Mangel direkt zum Feld, bei mehreren eine Liste zum Hinspringen.
+- Felder, die als Mangel zählen, haben einen roten Rand (einfarbige Felder zusätzlich „zählt als Mangel“).
+- ERD-01 „Zusätzlicher Potenzialausgleich vorhanden: Nein“ ist kein Mangel mehr – nicht jede Anlage hat oder braucht einen.
+- STAM-03 „Anlage / Objekt“ aus Anlagen- und Anschlussprotokoll (App und PDF) entfernt. PDF-Kopf der Anlagenprüfung zeigt
+  jetzt „Bereich / Gebäude“ (STAM-02); Übersicht/Archiv: Anlage → STAM-02, Anschluss → Standort Übergabepunkt (STAM-20).
+- Geräteprüfung: Hinweistext zur Prüfnorm (STAM-14) passt jetzt zu Geräten (EN 50699 / EN 50678).
+- Anlagenprüfung: „Grund der Prüfung“ und „Prüfnorm“ bieten keine Geräte-Optionen mehr an.
+
 ## 0.8.2 – Android-Startfehler behoben
 - Offline-Cache repariert sich selbst: Andere Web-Apps unter derselben github.io-Adresse löschen beim Aktualisieren
   fremde Caches – fehlende App-Dateien werden jetzt bei jedem Aufruf mit Internet still nachgeladen.
