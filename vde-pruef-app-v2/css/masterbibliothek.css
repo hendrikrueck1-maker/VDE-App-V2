@@ -1,0 +1,152 @@
+/* =========================================================================
+   Seiten-Styles für masterbibliothek.html.
+   Setzt auf css/style.css (Design-Token, Basis-Regeln) auf – hier stehen
+   NUR Regeln, die spezifisch für die Feldbibliotheks-Ansicht sind.
+   ========================================================================= */
+
+body{ padding-bottom:60px; }
+
+.topbar{position:sticky;top:0;z-index:30;background:var(--primary);color:#fff;padding:8px 14px;border-bottom:2px solid #001f3f;}
+.topbar-row1{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.topbar-row1 strong{font-size:.95rem;}
+.topbar-row1 .sub{font-size:.68rem;color:#cbd5e1;display:block;}
+.toggle-wrap{display:flex;align-items:center;gap:8px;font-size:.74rem;color:#fff;}
+.ios-toggle{position:relative;width:40px;height:22px;flex:none;}
+.ios-toggle input{opacity:0;width:0;height:0;}
+.ios-toggle .track{position:absolute;inset:0;background:#64748b;border-radius:999px;cursor:pointer;}
+.ios-toggle .track:before{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.15s;}
+.ios-toggle input:checked + .track{background:var(--success);}
+.ios-toggle input:checked + .track:before{transform:translateX(18px);}
+.toolbar-row2{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center;}
+#suche{flex:1;min-width:160px;padding:7px 10px;border-radius:5px;border:1px solid var(--border);font-size:.82rem;min-height:44px;}
+.chip{background:#1e4a7a;color:#e2e8f0;border:1px solid #2d5f96;border-radius:999px;padding:5px 11px;font-size:.72rem;cursor:pointer;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center;}
+.chip.active{background:#fff;color:var(--primary);font-weight:700;}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;}
+.legend{max-width:900px;margin:10px auto 0;padding:0 10px;font-size:.72rem;color:var(--secondary);display:flex;gap:14px;flex-wrap:wrap;}
+.legend .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;}
+
+.feldliste{max-width:900px;margin:14px auto;padding:0 10px;display:flex;flex-direction:column;gap:10px;}
+.feldkarte{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;scroll-margin-top:110px;}
+.feldkarte.hidden-by-filter{display:none;}
+.fk-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.fk-id{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;font-weight:700;color:#fff;background:var(--primary);border-radius:4px;padding:2px 7px;letter-spacing:.3px;}
+.fk-name{font-weight:700;font-size:.92rem;color:var(--primary);}
+.fk-cat{font-size:.66rem;background:#e2e8f0;color:var(--secondary);border-radius:3px;padding:2px 6px;margin-left:auto;}
+.fk-badge{font-size:.66rem;border-radius:3px;padding:2px 7px;font-weight:700;}
+.fk-badge.pflicht{background:var(--warn-bg);color:var(--warn-text);border:1px solid var(--warn-border);}
+.fk-badge.optional{background:#e2e8f0;color:var(--secondary);}
+.fk-badge.bedingt{background:#e0e7ff;color:#3730a3;}
+.fk-badge.kritisch{background:var(--danger-bg);color:var(--danger-text);border:1px solid var(--danger-border);}
+
+/* .fk-meta: nur noch für die Gruppenkopf-Bedingung bei ZS-01/ZN-01/RCD-01
+   verwendet (dort gibt es kein einzelnes Eingabefeld, das dazugehört). */
+.fk-meta{font-size:.78rem;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;margin-bottom:8px;display:grid;gap:4px;}
+.fk-meta div b{color:var(--secondary);font-weight:700;}
+
+/* ---- Kartenkörper: links Eingabe, rechts Bemerkung (Typ/Inhalt/Bedingung) ----
+   Auf Wunsch klar getrennt, weil die Bemerkung NIE ins Protokoll übernommen
+   wird – aber optisch weiter am selben Feld, nicht in einer separaten Liste.
+   Auf schmalen Bildschirmen (Handy) wird daraus eine Spalte. */
+.fk-body{display:flex;gap:16px;align-items:stretch;}
+.fk-eingabe{flex:1 1 300px;max-width:440px;display:flex;flex-direction:column;gap:6px;}
+.fk-bemerkung{flex:1 1 260px;border-left:2px dashed var(--border);padding:2px 0 2px 14px;font-size:.78rem;color:#334155;display:flex;flex-direction:column;gap:3px;justify-content:center;}
+.fk-bemerkung div b{color:var(--secondary);font-weight:700;}
+.fk-bemerkung-kopf{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--secondary);margin-bottom:2px;}
+.fk-bemerkung-hinweis{font-weight:400;text-transform:none;font-style:italic;color:#94a3b8;}
+@media (max-width:680px){
+  .fk-body{flex-direction:column;gap:8px;}
+  .fk-eingabe{max-width:none;}
+  .fk-bemerkung{border-left:none;border-top:1px dashed var(--border);padding:8px 0 0;}
+}
+label.sublabel{font-size:.72rem;font-weight:600;color:var(--secondary);}
+input,select,textarea{padding:8px 9px;border:1px solid var(--border);border-radius:5px;background:#fff;min-height:38px;width:100%;}
+textarea{min-height:60px;resize:vertical;}
+.readonly-field{background:#f1f5f9;color:var(--secondary);}
+.out-of-norm{background:var(--danger-bg)!important;border-color:var(--danger-border)!important;color:var(--danger-text)!important;font-weight:700;}
+
+.quick-row{display:flex;flex-wrap:wrap;gap:6px;}
+.quick-btn{background:#e2e8f0;border:1px solid var(--border);border-radius:3px;padding:8px 10px;font-size:.76rem;cursor:pointer;}
+.quick-btn:hover,.quick-btn:focus-visible{background:var(--accent);color:#fff;border-color:var(--accent);}
+.quick-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+/* ---- Segmentierte Felder (i.O./n.i.O./n.a., rechts/links, AC/DC, …) als
+   Buttons im Stil von NETZ-08/.quick-btn, ohne die zugrundeliegenden Radios
+   anzufassen – dadurch bleibt jegliche vorhandene Logik (berechneUL(),
+   updateOhneRcd(), Suche über :checked) unverändert funktionsfähig. Das
+   Radio-Input selbst wird unsichtbar, aber weiter fokus-/klickbar gemacht;
+   :has() übernimmt rein optisch den "aktiv"-Zustand. */
+.segmented{display:flex;gap:6px;flex-wrap:wrap;}
+.segmented label.opt{display:flex;align-items:center;justify-content:center;gap:0;border:1px solid var(--border);border-radius:3px;padding:8px 12px;font-size:.8rem;font-weight:500;cursor:pointer;min-height:44px;min-width:60px;background:#e2e8f0;position:relative;overflow:hidden;transition:background .1s,color .1s,border-color .1s;}
+.segmented label.opt input[type=radio]{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;}
+.segmented label.opt:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+.segmented label.opt:has(input:checked){background:var(--primary);color:#fff;border-color:var(--primary);font-weight:700;}
+.segmented label.opt:has(input:checked):hover{background:var(--primary);}
+.segmented label.opt.na-disabled{opacity:.5;}
+.segmented label.opt.na-disabled input{cursor:not-allowed;}
+.segmented label.opt.na-disabled:has(input:checked){background:#94a3b8;border-color:#94a3b8;}
+
+/* Gelb/grün-Rahmen ums gesamte Segmented-Feld, analog Text-/Number-/Select-
+   Pflichtfeldern - gesteuert von initPflichtfeldFarben() in masterbibliothek.js. */
+.segmented--leer{background:#fffbeb;border-radius:8px;padding:4px;}
+.segmented--ausgefuellt{background:#f0fdf4;border-radius:8px;padding:4px;}
+
+.subgroup{border-top:1px dashed var(--border);padding-top:8px;margin-top:8px;}
+.subgroup .fk-id-mini{font-family:ui-monospace,monospace;font-size:.66rem;background:#e2e8f0;color:var(--secondary);border-radius:3px;padding:1px 5px;margin-right:4px;}
+
+/* ---- Icons je Messung ----
+   Sitzen jetzt LINKS neben der Feld-Überschrift (in .fk-kopf, vor der ID),
+   nicht mehr unterhalb der Eingabe – dadurch automatisch immer sichtbar,
+   auch wenn die Anleitungen global ausgeblendet sind. Zwei Icon-Sorten:
+   - .icon-badge (Foto): rundes Drehschalter-Foto des Installationstesters
+   - .icon-badge--glyph: gezeichnetes Tasten-Symbol des Gerätetesters
+     (Fluke 6500-2 hat Tasten statt Drehschalter, daher kein Foto-Icon) */
+.icon-row{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;}
+.icon-badge{display:flex;flex-direction:column;align-items:center;gap:2px;width:52px;text-align:center;}
+.icon-badge img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid var(--border);background:#fff;display:block;}
+.icon-badge-label{font-size:.6rem;font-weight:700;color:var(--primary);line-height:1.1;}
+.icon-badge-platzhalter{width:36px;height:36px;border-radius:50%;border:2px dashed var(--border);background:#f1f5f9;color:var(--secondary);display:flex;align-items:center;justify-content:center;font-size:.56rem;font-weight:700;}
+.icon-badge--fehlt .icon-badge-label{color:#94a3b8;font-style:italic;font-weight:600;}
+
+.icon-badge--glyph .glyph-box{
+  width:36px;height:32px;border-radius:4px;border:2px solid var(--primary);
+  background:linear-gradient(180deg,#ffffff 0%,#ffffff 45%,#e9edf1 45%,#e9edf1 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--primary);box-shadow:1px 1px 0 rgba(0,0,0,.18);
+}
+.glyph-main{font-size:.8rem;font-weight:800;}
+.glyph-sub{font-size:.5rem;font-weight:800;align-self:flex-end;margin:0 0 3px 1px;}
+.glyph-slash{font-size:.62rem;font-weight:700;margin:0 1px;align-self:center;}
+
+/* Bei GER-10 (Messmethode Ableitstrom) hervorgehobenes/abgeblendetes Icon je
+   nach Dropdown-Auswahl, siehe updateAbleitIcon() in masterbibliothek.js. */
+.icon-badge--aktiv .glyph-box{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset,1px 1px 0 rgba(0,0,0,.18);}
+.icon-badge--aktiv .icon-badge-label{color:var(--accent);}
+.icon-badge--inaktiv{opacity:.35;filter:grayscale(55%);}
+
+/* Kopfzeile der Karte: Icons zuerst, dann ID/Name/Badges/Kategorie */
+.fk-kopf{align-items:flex-start;}
+.fk-kopf .fk-id, .fk-kopf .fk-name, .fk-kopf .fk-badge, .fk-kopf .fk-cat{align-self:center;}
+
+details.anleitung{margin-top:8px;border-top:1px solid #e2e8f0;padding-top:6px;}
+summary{cursor:pointer;font-size:.78rem;font-weight:600;color:var(--accent);min-height:44px;display:flex;align-items:center;}
+.infokarten-versteckt details.anleitung{display:none;}
+.karte-body{font-size:.8rem;line-height:1.5;padding-top:6px;}
+.karte-body ol{margin:4px 0 0;padding-left:18px;}
+.geraet-ref{font-size:.68rem;background:#f1f5f9;color:var(--secondary);border-radius:3px;padding:2px 6px;display:inline-block;margin-top:6px;}
+
+.count-info{max-width:900px;margin:8px auto 0;padding:0 10px;font-size:.72rem;color:var(--secondary);}
+
+/* ---- STAM-05 "Neue Nr. vergeben" / sonstige Zusatz-Knöpfe neben der Eingabe ---- */
+.extra-knopf{align-self:flex-start;}
+
+/* ---- STAM-02 "Liste bearbeiten" (editierbare Datalist, localStorage) ---- */
+.liste-editor-wrap{display:flex;flex-direction:column;gap:6px;}
+.liste-toggle-btn{align-self:flex-start;}
+.liste-editor{border:1px solid var(--border);border-radius:6px;background:#f8fafc;padding:8px;display:flex;flex-direction:column;gap:8px;}
+.liste-editor-items{display:flex;flex-wrap:wrap;gap:6px;}
+.liste-chip{display:inline-flex;align-items:center;gap:5px;background:#e2e8f0;color:var(--primary);border-radius:999px;padding:4px 6px 4px 11px;font-size:.76rem;font-weight:600;}
+.liste-chip-entfernen{background:none;border:none;color:var(--secondary);font-size:.95rem;line-height:1;cursor:pointer;padding:2px 4px;border-radius:50%;}
+.liste-chip-entfernen:hover{background:var(--danger-bg);color:var(--danger-text);}
+.liste-editor-leer{font-size:.76rem;font-style:italic;color:#94a3b8;}
+.liste-editor-add{display:flex;gap:6px;flex-wrap:wrap;}
+.liste-editor-input{flex:1 1 140px;min-width:120px;}

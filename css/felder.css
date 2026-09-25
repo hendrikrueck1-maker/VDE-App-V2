@@ -1,0 +1,150 @@
+/* =========================================================================
+   Gemeinsame Feld-Styles für alle Seiten (Masterbibliothek, Hauptseite,
+   Protokolle). Wortgleich aus masterbibliothek.css übernommen, damit Felder
+   überall gleich aussehen. Seitenspezifisches Layout bleibt in <seite>.css;
+   Farben nur über die Variablen aus style.css.
+   ========================================================================= */
+
+/* ---- Badges (Pflicht / Optional / Bedingt / Kritisch) ---- */
+/* transparenter Rahmen auf allen Badges → alle gleich hoch */
+.fk-badge{font-size:.66rem;border-radius:3px;padding:2px 7px;font-weight:700;border:1px solid transparent;}
+.fk-badge.pflicht{background:var(--warn-bg);color:var(--warn-text);border:1px solid var(--warn-border);}
+.fk-badge.optional{background:#e2e8f0;color:var(--secondary);}
+.fk-badge.bedingt{background:#e0e7ff;color:#3730a3;}
+.fk-badge.kritisch{background:var(--danger-bg);color:var(--danger-text);border:1px solid var(--danger-border);}
+
+/* ---- Eingabefelder, Schnellwahl (Quick-Buttons) ---- */
+label.sublabel{font-size:.72rem;font-weight:600;color:var(--secondary);}
+input,select,textarea{padding:8px 9px;border:1px solid var(--border);border-radius:5px;background:#fff;min-height:38px;width:100%;}
+textarea{min-height:60px;resize:vertical;}
+.readonly-field{background:#f1f5f9;color:var(--secondary);}
+.out-of-norm{background:var(--danger-bg)!important;border-color:var(--danger-border)!important;color:var(--danger-text)!important;font-weight:700;}
+
+.quick-row{display:flex;flex-wrap:wrap;gap:6px;}
+.quick-btn{background:#e2e8f0;border:1px solid var(--border);border-radius:3px;padding:8px 10px;font-size:.76rem;cursor:pointer;}
+.quick-btn:hover,.quick-btn:focus-visible{background:var(--accent);color:#fff;border-color:var(--accent);}
+.quick-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+/* ---- Segmentierte Felder, Pflichtfeld-Farben ---- */
+/* ---- Segmentierte Felder als Buttons; das Radio bleibt unsichtbar bedienbar, :has() zeigt den aktiven Zustand ---- */
+.segmented{display:flex;gap:6px;flex-wrap:wrap;}
+.segmented label.opt{display:flex;align-items:center;justify-content:center;gap:0;border:1px solid var(--border);border-radius:3px;padding:8px 12px;font-size:.8rem;font-weight:500;cursor:pointer;min-height:44px;min-width:60px;background:#e2e8f0;position:relative;overflow:hidden;transition:background .1s,color .1s,border-color .1s;}
+.segmented label.opt input[type=radio]{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;}
+.segmented label.opt:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+.segmented label.opt:has(input:checked){background:var(--primary);color:#fff;border-color:var(--primary);font-weight:700;}
+.segmented label.opt:has(input:checked):hover{background:var(--primary);}
+.segmented label.opt.na-disabled{opacity:.5;}
+.segmented label.opt.na-disabled input{cursor:not-allowed;}
+.segmented label.opt.na-disabled:has(input:checked){background:#94a3b8;border-color:#94a3b8;}
+
+/* i.O./Ja/OK grün, n.i.O./Nein/Fehler rot (per value-Attribut am Radio) */
+.segmented label.opt:has(input:checked[value="i.O."]),
+.segmented label.opt:has(input:checked[value="Ja"]),
+.segmented label.opt:has(input:checked[value="OK"]),
+.segmented label.opt:has(input:checked[value="🟢 i.O."]){
+  background:var(--success);border-color:var(--success);color:#fff;
+}
+.segmented label.opt:has(input:checked[value="n.i.O."]),
+.segmented label.opt:has(input:checked[value="Nein"]),
+.segmented label.opt:has(input:checked[value="Fehler"]),
+.segmented label.opt:has(input:checked[value="🔴 Mangel"]){
+  background:var(--danger-border);border-color:var(--danger-border);color:#fff;
+}
+
+/* Gelb/grün-Rahmen für segmentierte Pflichtfelder (initPflichtfeldFarben) */
+.segmented--leer{background:#fffbeb;border-radius:8px;padding:4px;}
+.segmented--ausgefuellt{background:#f0fdf4;border-radius:8px;padding:4px;}
+
+/* ---- Icons je Messung ---- */
+/* ---- Icons je Messung (links im Kartenkopf, immer sichtbar) ----
+   .icon-badge = Foto Drehschalter Fluke 1663 · .icon-badge--glyph = Taste Fluke 6500-2 */
+.icon-row{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;}
+.icon-badge{display:flex;flex-direction:column;align-items:center;gap:2px;width:52px;text-align:center;}
+.icon-badge img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid var(--border);background:#fff;display:block;}
+.icon-badge-label{font-size:.6rem;font-weight:700;color:var(--primary);line-height:1.1;}
+.icon-badge-platzhalter{width:36px;height:36px;border-radius:50%;border:2px dashed var(--border);background:#f1f5f9;color:var(--secondary);display:flex;align-items:center;justify-content:center;font-size:.56rem;font-weight:700;}
+.icon-badge--fehlt .icon-badge-label{color:#94a3b8;font-style:italic;font-weight:600;}
+
+.icon-badge--glyph .glyph-box{
+  width:36px;height:32px;border-radius:4px;border:2px solid var(--primary);
+  background:linear-gradient(180deg,#ffffff 0%,#ffffff 45%,#e9edf1 45%,#e9edf1 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--primary);box-shadow:1px 1px 0 rgba(0,0,0,.18);
+}
+.glyph-main{font-size:.8rem;font-weight:800;}
+.glyph-sub{font-size:.5rem;font-weight:800;align-self:flex-end;margin:0 0 3px 1px;}
+.glyph-slash{font-size:.62rem;font-weight:700;margin:0 1px;align-self:center;}
+
+/* GER-10: Icon der gewählten Messmethode hervorheben */
+.icon-badge--aktiv .glyph-box{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset,1px 1px 0 rgba(0,0,0,.18);}
+.icon-badge--aktiv .icon-badge-label{color:var(--accent);}
+.icon-badge--inaktiv{opacity:.35;filter:grayscale(55%);}
+
+/* ---- Zusatz-Knöpfe und editierbare Listen (STAM-02, STAM-05) ---- */
+/* ---- STAM-05 "Neue Nr. vergeben" / sonstige Zusatz-Knöpfe neben der Eingabe ---- */
+.extra-knopf{align-self:flex-start;}
+
+/* ---- STAM-02 "Liste bearbeiten" (editierbare Datalist, localStorage) ---- */
+.liste-editor-wrap{display:flex;flex-direction:column;gap:6px;}
+.liste-toggle-btn{align-self:flex-start;}
+.liste-editor{border:1px solid var(--border);border-radius:6px;background:#f8fafc;padding:8px;display:flex;flex-direction:column;gap:8px;}
+.liste-editor-items{display:flex;flex-wrap:wrap;gap:6px;}
+.liste-chip{display:inline-flex;align-items:center;gap:5px;background:#e2e8f0;color:var(--primary);border-radius:999px;padding:4px 6px 4px 11px;font-size:.76rem;font-weight:600;}
+.liste-chip-entfernen{background:none;border:none;color:var(--secondary);font-size:.95rem;line-height:1;cursor:pointer;padding:2px 4px;border-radius:50%;}
+.liste-chip-entfernen:hover{background:var(--danger-bg);color:var(--danger-text);}
+.liste-editor-leer{font-size:.76rem;font-style:italic;color:#94a3b8;}
+/* Eingabefeld behält 38 px Höhe neben dem 44-px-Knopf */
+.liste-editor-add{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.liste-editor-input{flex:1 1 140px;min-width:120px;}
+
+/* ---- Feld im Formular-Modus (renderFeld … modus:'formular'): ohne ID/Legende ---- */
+.feld{min-width:0;}
+.feld .fk-kopf{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.feld .fk-kopf .fk-name, .feld .fk-kopf .fk-badge{align-self:center;}
+.feld .fk-name{font-weight:700;font-size:.92rem;color:var(--primary);}
+.feld-einheit{font-weight:400;color:var(--secondary);}
+.feld .fk-eingabe{max-width:none;display:flex;flex-direction:column;gap:6px;}
+.feld-hinweis{margin:6px 0 0;font-size:.78rem;line-height:1.4;color:var(--secondary);}
+/* Status nie nur über Farbe: Häkchen im Badge bzw. an der gewählten Option */
+.feld .fk-badge--erledigt::before{content:"✓ ";}
+.feld .quick-btn.active::before{content:"✓ ";}
+.feld .segmented label.opt:has(input:checked)::before{content:"✓ ";margin-right:4px;}
+/* Im Formular klappt „Liste bearbeiten" wirklich zu (in der Masterbibliothek unverändert) */
+.feld .liste-editor[hidden]{display:none;}
+
+/* ---- Feld-ID im Formular (Protokollseiten: Schalter „Feld-IDs") ----
+   Standard unsichtbar; Body-Klasse `feld-ids-sichtbar` blendet sie ein. */
+.feld-id{display:none;}
+.feld-ids-sichtbar .feld-id{
+  display:inline-block;align-self:center;margin-left:auto;
+  font-family:ui-monospace,Consolas,monospace;font-size:.7rem;font-weight:700;
+  color:var(--primary);background:#e0e7ff;border:1px solid #c7d2fe;border-radius:3px;padding:1px 6px;
+}
+
+/* ---- Unterschrift (kind 'canvas' im Formular) ---- */
+.signatur{display:flex;flex-direction:column;gap:6px;}
+.signatur-flaeche{width:100%;max-width:600px;aspect-ratio:600/180;height:auto;background:#fff;border:1px dashed var(--secondary);border-radius:6px;touch-action:none;cursor:crosshair;}
+fieldset:disabled .signatur-flaeche, .gesperrt .signatur-flaeche{cursor:not-allowed;background:#f1f5f9;}
+.signatur-loeschen{align-self:flex-start;}
+
+/* ---- Fotos (kind 'foto' im Formular) ---- */
+.foto-feld{display:flex;flex-direction:column;gap:8px;}
+.foto-liste{display:flex;flex-wrap:wrap;gap:8px;}
+.foto-vorschau{position:relative;margin:0;width:96px;height:96px;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:#fff;}
+.foto-vorschau img{width:100%;height:100%;object-fit:cover;display:block;}
+.foto-entfernen{position:absolute;top:2px;right:2px;min-width:32px!important;min-height:32px!important;border-radius:50%;border:none;background:rgba(15,23,42,.75);color:#fff;font-size:1rem;cursor:pointer;}
+.foto-leer{margin:0;font-size:.78rem;font-style:italic;color:var(--secondary);}
+.foto-knoepfe{display:flex;flex-wrap:wrap;gap:6px;}
+.foto-knopf{position:relative;cursor:pointer;}
+.foto-knopf input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer;}
+.foto-knopf:focus-within{outline:3px solid #93c5fd;outline-offset:1px;}
+
+/* f.einfarbig (z. B. ERD-01): gewählte Option immer im Farbton von „Ja", auch „Nein" */
+.segmented.segmented--einfarbig label.opt:has(input:checked){background:var(--success);border-color:var(--success);color:#fff;}
+
+/* Zahlenfeld mit ungültiger Eingabe (Text, negativ, Tausenderpunkt) – zählt nicht als ausgefüllt */
+.eingabe-ungueltig{background:var(--danger-bg)!important;border-color:var(--danger-border)!important;border-style:dashed!important;color:var(--danger-text)!important;}
+.zahl-fehler{margin-top:4px;font-size:.76rem;line-height:1.4;color:var(--danger-text);font-weight:700;background:var(--danger-bg);border-left:3px solid var(--danger-border);padding:3px 7px;border-radius:3px;}
+.zahl-fehler:empty{display:none;}
+/* Widerspruch zur Ampel (z. B. „Keine Mängel“ trotz Mangel) */
+.feld--widerspruch{outline:2px solid var(--danger-border);outline-offset:3px;border-radius:6px;}

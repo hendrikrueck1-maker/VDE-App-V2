@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#003366">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/app/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/app/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="VDE Prüfung">
+<title>Archiv – VDE Prüf App</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/startseite.css">
+<link rel="stylesheet" href="css/archiv.css">
+</head>
+<body>
+<a class="skip-link" href="#archiv-liste">Zur Liste springen</a>
+
+<!-- Nur Gerüst. Logik: js/archiv.js · Speicher: js/speicher.js (Archiv) · Einstellungen: ARCHIV in js/app-config.js -->
+<header class="seitenkopf">
+  <div class="archiv-kopf">
+    <a class="btn btn-secondary" href="index.html">← Hauptseite</a>
+    <h1>Archiv</h1>
+  </div>
+  <p class="karte-hinweis">Hier liegt zu jedem Protokoll das zuletzt erstellte ausgefüllte PDF. Ein neues PDF desselben Protokolls ersetzt den Eintrag.</p>
+</header>
+
+<main class="inhalt">
+  <div id="meldung" class="meldung" role="status" aria-live="polite" hidden></div>
+
+  <!-- Filter -->
+  <section class="karte archiv-filter" aria-labelledby="h-filter">
+    <h2 id="h-filter" class="visually-hidden">Filter</h2>
+    <div class="filter-raster">
+      <label class="filter-feld filter-feld--suche">
+        <span>Suchen</span>
+        <input type="search" id="f-suche" placeholder="Nr., Ort oder Anlage" autocomplete="off">
+      </label>
+      <label class="filter-feld">
+        <span>Monat</span>
+        <select id="f-monat"></select>
+      </label>
+      <label class="filter-feld">
+        <span>Protokoll</span>
+        <select id="f-typ"></select>
+      </label>
+      <label class="filter-feld">
+        <span>Ergebnis</span>
+        <select id="f-ergebnis">
+          <option value="">Alle</option>
+          <option value="i.O.">nur i.O.</option>
+          <option value="n.i.O.">nur n.i.O.</option>
+          <option value="offen">nur offen (unvollständig)</option>
+        </select>
+      </label>
+    </div>
+    <div class="aktionszeile">
+      <span id="treffer" class="speicher-status" role="status" aria-live="polite">Wird geladen …</span>
+      <span class="aktionszeile aktionszeile--links archiv-filter-knoepfe">
+        <button type="button" class="btn btn-secondary" id="btn-alle-waehlen">Alle angezeigten auswählen</button>
+        <button type="button" class="btn btn-secondary" id="btn-filter-zurueck">Filter zurücksetzen</button>
+      </span>
+    </div>
+  </section>
+
+  <!-- Liste, nach Monat gruppiert -->
+  <section id="archiv-liste" aria-label="Archivierte Protokolle" tabindex="-1"></section>
+</main>
+
+<!-- Auswahlleiste (erscheint bei ausgewählten Einträgen) -->
+<div class="auswahlleiste" id="auswahlleiste" hidden>
+  <span id="auswahl-text" role="status" aria-live="polite"></span>
+  <button type="button" class="btn btn-success" id="btn-zip">Als ZIP zusammenfassen</button>
+  <button type="button" class="btn btn-secondary" id="btn-auswahl-leeren">Aufheben</button>
+</div>
+
+<!-- Bestätigungsdialog (wie Hauptseite) -->
+<dialog id="dialog" class="dialog" aria-labelledby="dialog-titel">
+  <form method="dialog">
+    <h2 id="dialog-titel"></h2>
+    <div id="dialog-text"></div>
+    <div class="aktionszeile aktionszeile--links">
+      <button type="submit" value="abbruch" class="btn btn-secondary" id="dialog-abbruch">Abbrechen</button>
+      <button type="submit" value="ok" class="btn" id="dialog-ok">OK</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ZIP fertig: Teilen / Herunterladen (eigener Klick, damit das Teilen-Menü auf jedem Gerät öffnet) -->
+<dialog id="zip-dialog" class="dialog" aria-labelledby="zip-titel">
+  <form method="dialog">
+    <h2 id="zip-titel">ZIP ist fertig</h2>
+    <p id="zip-text"></p>
+    <div class="aktionszeile aktionszeile--links">
+      <button type="submit" value="teilen" class="btn btn-success" id="zip-teilen">Teilen (WhatsApp, Mail …)</button>
+      <button type="submit" value="laden" class="btn btn-secondary">Herunterladen</button>
+      <button type="submit" value="abbruch" class="btn btn-secondary">Abbrechen</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Versand-Rückfrage nach dem Teilen (Knöpfe aus ARCHIV.versandwege) -->
+<dialog id="versand-dialog" class="dialog" aria-labelledby="versand-titel">
+  <form method="dialog">
+    <h2 id="versand-titel">Wurde es verschickt?</h2>
+    <p id="versand-text"></p>
+    <div class="aktionszeile aktionszeile--links" id="versand-knoepfe"></div>
+  </form>
+</dialog>
+
+<script src="js/app-config.js"></script>
+<script src="js/speicher.js"></script>
+<script src="js/zip.js"></script>
+<script src="js/pdf-ansicht.js"></script>   <!-- lädt pdf.js erst beim ersten „Ansehen" -->
+<script src="js/archiv.js"></script>
+</body>
+</html>

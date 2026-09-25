@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#003366">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/app/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/app/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="VDE Prüfung">
+<title>Prüfprotokolle Hauptübersicht – VDE Prüf App</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/felder.css">
+<link rel="stylesheet" href="css/erklaerungen.css">
+<link rel="stylesheet" href="css/startseite.css">
+</head>
+<body>
+<a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="seitenkopf">
+  <h1>Prüfprotokolle Hauptübersicht</h1>
+  <div class="kopfzeile">
+    <label class="schalter">
+      <input type="checkbox" role="switch" id="toggleInfokarten" aria-describedby="hilfen-hinweis">
+      <span class="schalter-spur" aria-hidden="true"></span>
+      <span>Hilfen „Warum &amp; Wie“</span>
+      <span class="schalter-text" data-schalter-text aria-hidden="true">Ein</span>
+    </label>
+    <a class="btn btn-secondary" href="masterbibliothek.html">Masterbibliothek</a>
+  </div>
+  <p class="karte-hinweis" id="hilfen-hinweis">Blendet die Erklärungen „Warum wird geprüft?“ und „Wie wird geprüft?“ auf allen Seiten ein oder aus.</p>
+</header>
+
+<main id="inhalt" class="inhalt">
+  <div id="meldung" class="meldung" role="status" aria-live="polite" hidden></div>
+
+  <!-- 1. Zentrale Stammdaten -->
+  <section class="karte" aria-labelledby="h-stammdaten">
+    <h2 id="h-stammdaten">Zentrale Stammdaten</h2>
+    <p class="karte-hinweis">Diese Angaben werden automatisch in alle Prüfprotokolle übernommen.</p>
+    <div id="stammdaten-felder" class="grid formular"></div>
+    <div class="aktionszeile">
+      <span id="stammdaten-status" class="speicher-status" role="status" aria-live="polite">Wird geladen …</span>
+      <button type="button" class="btn btn-danger" id="btn-stammdaten-leeren">Stammdaten leeren</button>
+    </div>
+  </section>
+
+  <!-- 2. Protokoll starten -->
+  <section aria-labelledby="h-start">
+    <h2 id="h-start">Protokoll starten</h2>
+    <p class="karte-hinweis">Ein neues Protokoll erhält automatisch die nächste freie Protokollnummer und übernimmt die Stammdaten von oben.</p>
+    <div id="kacheln" class="grid"></div>
+  </section>
+
+  <!-- 3. Archiv -->
+  <section class="karte" aria-labelledby="h-archiv">
+    <h2 id="h-archiv">Archiv</h2>
+    <p class="karte-hinweis">Alle erstellten PDFs: ansehen, nach Monat und Protokoll filtern, teilen (WhatsApp, Mail), als ZIP verschicken, erneute Prüfung anlegen.</p>
+    <a class="btn" href="archiv.html" id="btn-archiv">Archiv öffnen</a>
+    <h3 class="unterueberschrift">Zuletzt archiviert</h3>
+    <div id="archiv-letzte"></div>
+  </section>
+
+  <!-- 4. Vergangene Prüfungen -->
+  <section aria-labelledby="h-vergangene">
+    <h2 id="h-vergangene">Vergangene Prüfungen</h2>
+    <details class="karte bereich" id="bereich-offen">
+      <summary>Offene Prüfungen (<span id="anzahl-offen">0</span>)</summary>
+      <div id="liste-offen" class="eintraege"></div>
+    </details>
+    <details class="karte bereich" id="bereich-abgeschlossen">
+      <summary>Bereits abgeschlossen (<span id="anzahl-abgeschlossen">0</span>)</summary>
+      <div id="liste-abgeschlossen" class="eintraege"></div>
+    </details>
+  </section>
+
+  <!-- 5. PDF-Speicherort -->
+  <section class="karte" aria-labelledby="h-pdf">
+    <h2 id="h-pdf">PDF-Speicherort</h2>
+    <p class="karte-hinweis">Hier legst du fest, wohin fertige Prüfprotokolle als PDF gespeichert werden.</p>
+    <p class="ist-wert"><strong>Aktueller Speicherort:</strong> <span id="pdf-ort">–</span></p>
+    <div class="aktionszeile aktionszeile--links">
+      <button type="button" class="btn btn-secondary" id="btn-pdf-ordner" hidden>Eigenen Ordner wählen</button>
+      <button type="button" class="btn btn-secondary" id="btn-pdf-download" hidden>Zurück auf Download-Ordner</button>
+    </div>
+    <p class="karte-hinweis" id="pdf-hinweis"></p>
+  </section>
+
+  <!-- 6. Datensicherung -->
+  <section class="karte" aria-labelledby="h-sicherung">
+    <h2 id="h-sicherung">Datensicherung</h2>
+    <p class="karte-hinweis">Alle Daten liegen nur auf diesem Gerät. Regelmäßig exportieren – iOS/Safari kann Browserspeicher löschen.</p>
+    <div class="aktionszeile aktionszeile--links">
+      <button type="button" class="btn" id="btn-export">Daten exportieren</button>
+      <button type="button" class="btn btn-secondary" id="btn-import">Daten importieren …</button>
+      <input type="file" id="import-datei" accept="application/json,.json" hidden>
+    </div>
+    <div id="import-vorschau" class="vorschau" hidden>
+      <h3 class="unterueberschrift">Vorschau der Sicherung</h3>
+      <p id="import-vorschau-text"></p>
+      <div class="aktionszeile aktionszeile--links">
+        <button type="button" class="btn btn-success" id="btn-import-merge">Zusammenführen</button>
+        <button type="button" class="btn btn-danger" id="btn-import-ersetzen">Ersetzen …</button>
+        <button type="button" class="btn btn-secondary" id="btn-import-abbruch">Abbrechen</button>
+      </div>
+      <ul class="hinweisliste">
+        <li><strong>Zusammenführen:</strong> Vorhandene Daten bleiben. Gibt es ein Protokoll in beiden Beständen, gewinnt der neuere Stand.</li>
+        <li><strong>Ersetzen:</strong> Alle vorhandenen Entwürfe, abgeschlossenen Protokolle und die Stammdaten werden durch die Sicherung ersetzt. Die Nummernzähler werden dabei nie zurückgesetzt.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. Version & Update -->
+  <section class="karte" aria-labelledby="h-version">
+    <h2 id="h-version">Version &amp; Update</h2>
+    <dl class="versionsliste">
+      <div><dt>App-Version</dt><dd id="v-app">–</dd></div>
+      <div><dt>Offline-Cache-Version</dt><dd id="v-cache">–</dd></div>
+      <div><dt>Service Worker</dt><dd id="v-sw">–</dd></div>
+    </dl>
+    <div id="update-bereich" class="meldung meldung--hinweis" role="status" hidden>
+      <span>Update verfügbar.</span>
+      <button type="button" class="btn btn-success" id="btn-update-laden">Update verfügbar – jetzt neu laden</button>
+    </div>
+    <div class="aktionszeile aktionszeile--links">
+      <button type="button" class="btn btn-secondary" id="btn-update-suchen">Nach Updates suchen</button>
+      <button type="button" class="btn btn-danger" id="btn-cache-reset">Offline-Speicher zurücksetzen</button>
+    </div>
+    <p class="karte-hinweis" id="update-ergebnis" role="status" aria-live="polite"></p>
+    <p class="karte-hinweis">„Offline-Speicher zurücksetzen“ löscht nur den Zwischenspeicher der App-Dateien. Deine Prüfdaten bleiben erhalten.</p>
+  </section>
+</main>
+
+<!-- Bestätigungsdialog (ersetzt window.confirm; Tastatur- und Screenreader-tauglich) -->
+<dialog id="dialog" class="dialog" aria-labelledby="dialog-titel">
+  <form method="dialog">
+    <h2 id="dialog-titel"></h2>
+    <div id="dialog-text"></div>
+    <div class="aktionszeile aktionszeile--links">
+      <button type="submit" value="abbruch" class="btn btn-secondary" id="dialog-abbruch">Abbrechen</button>
+      <button type="submit" value="ok" class="btn" id="dialog-ok">OK</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="js/felder-daten.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/erklaerungen-daten.js"></script>
+<script src="js/erklaerungen.js"></script>
+<script src="js/app-config.js"></script>
+<script src="js/feld-renderer.js"></script>
+<script src="js/speicher.js"></script>
+<script src="js/startseite.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+/* =========================================================================
+   Nur Hauptseiten-Layout (index.html). Farben, Buttons, Karten, Schalter und
+   Feld-Styles kommen aus style.css bzw. felder.css.
+   ========================================================================= */
+
+body{ padding-bottom:48px; }
+
+
+.seitenkopf{ max-width:1100px; margin:0 auto; padding:16px 16px 4px; }
+.seitenkopf h1{ font-size:1.5rem; margin-bottom:12px; }
+.kopfzeile{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; }
+.folgt-gruppe{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:4px 10px; }
+.folgt-hinweis{ font-size:.78rem; color:var(--secondary); font-style:italic; }
+
+.inhalt{ max-width:1100px; margin:0 auto; padding:8px 16px; display:flex; flex-direction:column; gap:20px; }
+.inhalt h2{ font-size:1.1rem; }
+.unterueberschrift{ font-size:.95rem; margin:16px 0 8px; }
+
+/* Raster: Kacheln und Felder; mobil (< 768 px) einspaltig */
+.grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; }
+@media (max-width:767px){ .grid{ grid-template-columns:1fr; } }
+
+/* Felder im Formular-Modus: Höhe ≥ 44 px, Fokus sichtbar (aus style.css) */
+.formular input:not([type=checkbox]):not([type=radio]), .formular select{ min-height:44px; }
+.formular .feld{ background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px; }
+
+/* Kacheln „Protokoll starten" */
+.kachel{ display:flex; flex-direction:column; gap:10px; }
+.kachel h3{ font-size:1rem; margin:0; }
+.kachel p{ margin:0; font-size:.84rem; color:var(--secondary); line-height:1.45; }
+.kachel .aktionen{ display:flex; flex-direction:column; gap:8px; margin-top:auto; }
+.kachel .btn, .kachel .btn-warn, .kachel .btn-success{ width:100%; }
+.kachel-status{ font-size:.78rem; font-weight:600; color:var(--warn-text); }
+.kachel-hinweis{ font-size:.82rem; font-weight:600; color:var(--warn-text); background:var(--warn-bg); border-left:3px solid var(--warn-border); padding:6px 9px; border-radius:3px; }
+.kachel-hinweis:empty{ display:none; }
+.kachel-fortsetzen-info{ font-size:.76rem; color:var(--secondary); }
+
+/* Archiv / Listen */
+.leerzustand{ margin:0; font-size:.86rem; color:var(--secondary); font-style:italic; }
+.eintraege{ display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+.eintrag{ border:1px solid var(--border); border-radius:8px; background:var(--card); padding:10px 12px; display:flex; flex-direction:column; gap:8px; }
+.eintrag-daten{ display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:6px 14px; margin:0; }
+.eintrag-daten dt{ font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--secondary); }
+.eintrag-daten dd{ margin:0; font-size:.88rem; overflow-wrap:anywhere; }
+.ergebnis-io{ color:var(--success-dark); }
+.ergebnis-nio{ color:var(--danger-text); }
+.ergebnis-offen{ color:var(--warn-text); }
+.eintrag-nummer{ font-family:ui-monospace,Consolas,monospace; font-weight:700; color:var(--primary); }
+.eintrag-aktionen{ display:flex; flex-wrap:wrap; gap:8px; }
+.eintrag-hinweis{ margin:0; font-size:.8rem; font-weight:600; color:var(--warn-text); }
+.eintrag-hinweis:empty{ display:none; }
+
+/* Einklappbare Bereiche: Zusammenfassung ≥ 44 px, sichtbarer Fokus */
+.bereich{ padding:0; }
+.bereich > summary{ min-height:44px; display:flex; align-items:center; padding:10px 16px; cursor:pointer; font-weight:700; color:var(--primary); font-size:1rem; border-radius:8px; }
+.bereich > summary:focus-visible{ outline:3px solid #93c5fd; outline-offset:-3px; }
+.bereich[open] > summary{ border-bottom:1px solid var(--border); border-radius:8px 8px 0 0; }
+.bereich > .eintraege{ padding:0 16px 16px; }
+.inhalt section + section{ margin-top:0; }
+#h-vergangene{ margin-bottom:10px; }
+.bereich + .bereich{ margin-top:10px; }
+
+/* PDF, Sicherung, Version */
+.ist-wert{ margin:0 0 4px; font-size:.9rem; }
+.vorschau{ margin-top:16px; padding:12px 14px; border:1px dashed var(--border); border-radius:8px; background:var(--bg); }
+.hinweisliste{ margin:10px 0 0; padding-left:18px; font-size:.82rem; color:var(--secondary); line-height:1.5; }
+.versionsliste{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px 16px; margin:0 0 14px; }
+.versionsliste dt{ font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--secondary); }
+.versionsliste dd{ margin:2px 0 0; font-size:.9rem; overflow-wrap:anywhere; }
+#update-ergebnis:empty{ display:none; }
+#update-bereich{ margin-bottom:12px; }
+

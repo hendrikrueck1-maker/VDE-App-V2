@@ -1,0 +1,69 @@
+/* =========================================================================
+   Seiten-Styles für masterbibliothek.html (baut auf css/style.css auf).
+   ========================================================================= */
+
+body{ padding-bottom:60px; }
+
+.topbar{position:sticky;top:0;z-index:30;background:var(--primary);color:#fff;padding:8px 14px;border-bottom:2px solid #001f3f;}
+.topbar-row1{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.topbar-row1 strong{font-size:.95rem;}
+.topbar-row1 .sub{font-size:.68rem;color:#cbd5e1;display:block;}
+.toggle-wrap{display:flex;align-items:center;gap:8px;font-size:.74rem;color:#fff;}
+.ios-toggle{position:relative;width:40px;height:22px;flex:none;}
+.ios-toggle input{opacity:0;width:0;height:0;}
+.ios-toggle .track{position:absolute;inset:0;background:#64748b;border-radius:999px;cursor:pointer;}
+.ios-toggle .track:before{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.15s;}
+.ios-toggle input:checked + .track{background:var(--success);}
+.ios-toggle input:checked + .track:before{transform:translateX(18px);}
+.toolbar-row2{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center;}
+#suche{flex:1;min-width:160px;padding:7px 10px;border-radius:5px;border:1px solid var(--border);font-size:.82rem;min-height:44px;}
+.chip{background:#1e4a7a;color:#e2e8f0;border:1px solid #2d5f96;border-radius:999px;padding:5px 11px;font-size:.72rem;cursor:pointer;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center;}
+.chip.active{background:#fff;color:var(--primary);font-weight:700;}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;}
+.legend{max-width:900px;margin:10px auto 0;padding:0 10px;font-size:.72rem;color:var(--secondary);display:flex;gap:14px;flex-wrap:wrap;}
+.legend .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;}
+
+.feldliste{max-width:900px;margin:14px auto;padding:0 10px;display:flex;flex-direction:column;gap:10px;}
+.feldkarte{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;scroll-margin-top:110px;}
+.feldkarte.hidden-by-filter{display:none;}
+.fk-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.fk-id{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;font-weight:700;color:#fff;background:var(--primary);border-radius:4px;padding:2px 7px;letter-spacing:.3px;}
+.fk-name{font-weight:700;font-size:.92rem;color:var(--primary);}
+.fk-cat{font-size:.66rem;background:#e2e8f0;color:var(--secondary);border-radius:3px;padding:2px 6px;margin-left:auto;}
+
+/* .fk-meta: Bedingung im Kopf einer Blockkarte */
+.fk-meta{font-size:.78rem;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;margin-bottom:8px;display:grid;gap:4px;}
+.fk-meta div b{color:var(--secondary);font-weight:700;}
+
+/* ---- Kartenkörper: links Eingabe, rechts Legende (nicht im Protokoll); Handy: eine Spalte ---- */
+.fk-body{display:flex;gap:16px;align-items:stretch;}
+.fk-eingabe{flex:1 1 300px;max-width:440px;display:flex;flex-direction:column;gap:6px;}
+.fk-bemerkung{flex:1 1 260px;border-left:2px dashed var(--border);padding:2px 0 2px 14px;font-size:.78rem;color:#334155;display:flex;flex-direction:column;gap:3px;justify-content:center;}
+.fk-bemerkung div b{color:var(--secondary);font-weight:700;}
+.fk-bemerkung-kopf{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--secondary);margin-bottom:2px;}
+.fk-bemerkung-hinweis{font-weight:400;text-transform:none;font-style:italic;color:#94a3b8;}
+@media (max-width:680px){
+  .fk-body{flex-direction:column;gap:8px;}
+  .fk-eingabe{max-width:none;}
+  .fk-bemerkung{border-left:none;border-top:1px dashed var(--border);padding:8px 0 0;}
+}
+
+
+.subgroup{border-top:1px dashed var(--border);padding-top:8px;margin-top:8px;}
+.subgroup .fk-id-mini{font-family:ui-monospace,monospace;font-size:.66rem;background:#e2e8f0;color:var(--secondary);border-radius:3px;padding:1px 5px;margin-right:4px;}
+/* Abstand Überschrift → Eingabe in Blockkarten wie bei Einzelkarten */
+.subgroup .fk-body{margin-top:6px;}
+
+
+/* Kopfzeile der Karte: Icons zuerst, dann ID/Name/Badges/Kategorie */
+.fk-kopf{align-items:flex-start;}
+.fk-kopf .fk-id, .fk-kopf .fk-name, .fk-kopf .fk-badge, .fk-kopf .fk-cat{align-self:center;}
+
+
+.count-info{max-width:900px;margin:8px auto 0;padding:0 10px;font-size:.72rem;color:var(--secondary);}
+
+
+/* Gemeinsame Warum/Wie-Hilfe einer Blockkarte (oben, vor den Unterfeldern) */
+.gruppen-erkl{margin:4px 0 10px;padding-bottom:10px;border-bottom:1px dashed #e2e8f0;}
+.gruppen-erkl .erkl{margin-top:0;}
+.mb-zurueck{color:#fff;font-size:.85rem;margin-right:10px;text-decoration:underline;}

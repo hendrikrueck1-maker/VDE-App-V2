@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#003366">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/app/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/app/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="VDE Prüfung">
+<title>Prüfprotokoll Anschlussprüfung – VDE Prüf App</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/felder.css">
+<link rel="stylesheet" href="css/erklaerungen.css">
+<link rel="stylesheet" href="css/protokoll.css">
+</head>
+<body>
+<a class="skip-link" href="#protokoll-form">Zum Protokoll springen</a>
+
+<!-- Kopf: Titel, Schalter, Sprungleiste. Inhalt kommt aus dem Bauplan (js/protokoll-anschluss.js). -->
+<header class="protokoll-kopf">
+  <div class="kopf-zeile">
+    <a class="btn btn-secondary" href="index.html">← Hauptseite</a>
+    <div class="kopf-titel">
+      <h1 id="p-titel">Prüfprotokoll</h1>
+      <p class="untertitel" id="p-untertitel"></p>
+    </div>
+  </div>
+  <div class="kopfzeile">
+    <label class="schalter">
+      <input type="checkbox" role="switch" id="toggleInfokarten">
+      <span class="schalter-spur" aria-hidden="true"></span>
+      <span>Hilfen „Warum &amp; Wie“</span>
+      <span class="schalter-text" data-schalter-text aria-hidden="true">Ein</span>
+    </label>
+    <label class="schalter">
+      <input type="checkbox" role="switch" id="toggleFeldIds">
+      <span class="schalter-spur" aria-hidden="true"></span>
+      <span>Feld-IDs anzeigen</span>
+      <span class="schalter-text" data-schalter-text aria-hidden="true">Ein</span>
+    </label>
+  </div>
+</header>
+
+<!-- Statusleiste (bleibt oben stehen) -->
+<div class="statusleiste" role="status" aria-live="polite">
+  <span class="status-chip status-chip--nummer">Nr. <strong id="p-nummer">–</strong></span>
+  <span class="status-chip" id="p-status">–</span>
+  <span class="status-chip" id="p-fortschritt">–</span>
+  <span class="status-chip status-chip--fehler" id="p-maengel" hidden></span>
+  <span class="status-chip" id="p-speicher">Wird geladen …</span>
+</div>
+
+<main class="protokoll-inhalt">
+  <div id="meldung" class="meldung" role="status" aria-live="polite" hidden></div>
+
+  <!-- Kein / ungültiger Entwurf -->
+  <section class="karte" id="kein-entwurf" hidden>
+    <h2>Kein Protokoll geöffnet</h2>
+    <p id="kein-entwurf-text"></p>
+    <div class="aktionszeile aktionszeile--links">
+      <button type="button" class="btn btn-success" id="btn-neu-anlegen">+ Neues Protokoll anlegen</button>
+      <a class="btn btn-secondary" href="index.html">Zur Hauptseite</a>
+    </div>
+  </section>
+
+  <div id="protokoll-inhalt">
+    <nav class="abschnitt-nav" id="abschnitt-nav" aria-label="Abschnitte des Protokolls"></nav>
+
+    <!-- Abschnitte werden aus dem Bauplan erzeugt -->
+    <div id="protokoll-form" class="protokoll-form"></div>
+
+    <!-- Protokoll erstellen: PDF-Plan in js/pdf-anschluss.js (1 Seite + Fotos), Bausteine js/pdf-protokoll.js -->
+    <section class="karte abschnitt" id="abschnitt-erstellen" aria-labelledby="h-erstellen">
+      <h2 id="h-erstellen">Protokoll erstellen</h2>
+      <p class="karte-hinweis">„Ausgefülltes Protokoll“ prüft Pflichtfelder und Mängelbewertung und erstellt das PDF. „Leeres Protokoll“ ist eine Vorlage zum Ausfüllen von Hand.</p>
+      <div class="aktionszeile aktionszeile--links">
+        <button type="button" class="btn btn-success" id="btn-pdf-ausgefuellt">Ausgefülltes Protokoll erstellen</button>
+        <button type="button" class="btn btn-secondary" id="btn-pdf-leer">Leeres Protokoll erstellen</button>
+      </div>
+      <div id="pflicht-ergebnis" class="meldung" role="status" aria-live="polite" hidden></div>
+    </section>
+  </div>
+</main>
+
+<dialog id="dialog" class="dialog" aria-labelledby="dialog-titel">
+  <form method="dialog">
+    <h2 id="dialog-titel"></h2>
+    <div id="dialog-text"></div>
+    <div class="aktionszeile aktionszeile--links">
+      <button type="submit" value="abbruch" class="btn btn-secondary" id="dialog-abbruch">Abbrechen</button>
+      <button type="submit" value="ok" class="btn" id="dialog-ok">OK</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="js/felder-daten.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/erklaerungen-daten.js"></script>
+<script src="js/erklaerungen.js"></script>
+<script src="js/app-config.js"></script>
+<script src="js/feld-renderer.js"></script>
+<script src="js/speicher.js"></script>
+<script src="js/feld-logik.js"></script>
+<script src="js/protokoll-seite.js"></script>
+<script src="js/protokoll-anschluss.js"></script>
+<script src="js/pdf-layout.js"></script>   <!-- lädt jsPDF + Schrift erst beim Erstellen -->
+<script src="js/pdf-protokoll.js"></script>
+<script src="js/pdf-anschluss.js"></script>
+<script>ProtokollSeite.start(BAUPLAN_ANSCHLUSS);</script>
+</body>
+</html>

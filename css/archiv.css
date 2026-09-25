@@ -1,0 +1,76 @@
+/* =========================================================================
+   Nur Archiv (archiv.html) + PDF-Ansicht (js/pdf-ansicht.js).
+   Farben, Buttons, Meldungen, Dialog: style.css · Seitenrahmen: startseite.css
+   ========================================================================= */
+
+.archiv-kopf{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin-bottom:8px; }
+.archiv-kopf h1{ margin:0; }
+
+/* Filter */
+.filter-raster{ display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:10px 14px; }
+@media (max-width:767px){ .filter-raster{ grid-template-columns:1fr 1fr; } .filter-feld--suche{ grid-column:1 / -1; } }
+.filter-feld{ min-width:0; display:flex; flex-direction:column; gap:4px; font-size:.74rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--secondary); }
+.filter-feld input, .filter-feld select{ width:100%; min-height:44px; padding:8px 10px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:#0f172a; font-size:.92rem; font-weight:400; text-transform:none; letter-spacing:0; }
+.archiv-filter .aktionszeile{ margin-top:10px; }
+.archiv-filter-knoepfe{ margin-top:0; gap:8px; }
+
+/* Monatsgruppen */
+.arch-monat + .arch-monat{ margin-top:20px; }
+.arch-monat-titel{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; font-size:1.05rem; margin:0 0 10px; padding-bottom:6px; border-bottom:2px solid var(--primary); }
+.arch-monat-info{ font-size:.8rem; font-weight:600; color:var(--secondary); }
+.arch-raster{ display:grid; grid-template-columns:repeat(auto-fill, minmax(330px, 1fr)); gap:12px; }
+@media (max-width:767px){ .arch-raster{ grid-template-columns:1fr; } }
+
+/* Karte je Protokoll: linker Balken = Ergebnis */
+.arch-karte{ display:flex; flex-direction:column; gap:8px; background:var(--card); border:1px solid var(--border); border-left:6px solid var(--success); border-radius:8px; padding:10px 12px; }
+.arch-karte--nio{ border-left-color:var(--danger-border); }
+.arch-karte--offen{ border-left-color:var(--warn-border); }
+.arch-karte--gewaehlt{ outline:3px solid #93c5fd; outline-offset:1px; background:#f0f7ff; }
+.arch-kopf{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; }
+.arch-wahl{ display:inline-flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; margin:-8px -4px -8px -8px; cursor:pointer; }
+.arch-wahl input{ width:22px; height:22px; cursor:pointer; accent-color:var(--primary); }
+.arch-nummer{ font-size:1.02rem; }
+.arch-badge{ display:inline-block; padding:3px 9px; border-radius:999px; font-size:.8rem; font-weight:800; letter-spacing:.02em; border:1px solid; }
+.arch-badge--io{ background:#dcfce7; color:var(--success-dark); border-color:#86efac; }
+.arch-badge--nio{ background:var(--danger-bg); color:var(--danger-text); border-color:var(--danger-border); }
+.arch-badge--offen{ background:var(--warn-bg); color:var(--warn-text); border-color:var(--warn-border); font-weight:700; }
+
+.arch-daten{ display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 14px; margin:0; }
+.arch-daten > div{ display:flex; align-items:baseline; gap:8px; }
+.arch-daten dt{ flex:none; width:4.2em; font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--secondary); }
+.arch-daten dd{ margin:0; min-width:0; font-size:.95rem; font-weight:600; overflow-wrap:break-word; }
+.arch-daten > .arch-anzahl{ grid-column:2; grid-row:1 / span 2; flex-direction:column; align-items:center; justify-content:center; gap:0;
+  min-width:78px; padding:4px 8px; border:1px solid var(--border); border-radius:6px; background:var(--bg); }
+.arch-anzahl dt{ width:auto; }
+.arch-anzahl dd{ font-size:1.35rem; font-weight:800; color:var(--primary); line-height:1.1; }
+.arch-meta{ margin:0; font-size:.78rem; color:var(--secondary); }
+.arch-versand{ margin:0; font-size:.8rem; font-weight:700; color:var(--success-dark); background:#f0fdf4; border-left:3px solid var(--success); padding:4px 8px; border-radius:3px; }
+.arch-versand--alt{ color:var(--warn-text); background:var(--warn-bg); border-left-color:var(--warn-border); font-weight:600; }
+.arch-karte .eintrag-aktionen .btn, .arch-karte .eintrag-aktionen .btn-secondary,
+.arch-karte .eintrag-aktionen .btn-success, .arch-karte .eintrag-aktionen .btn-danger{ flex:1 1 auto; padding:8px 10px; }
+
+/* Auswahlleiste unten */
+.auswahlleiste{ position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px 14px;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom)); background:var(--primary); color:#fff; font-weight:700; font-size:.9rem; box-shadow:0 -4px 14px rgba(0,0,0,.18); }
+.auswahlleiste[hidden]{ display:none; }
+.auswahlleiste .btn-secondary{ background:transparent; color:#fff; border-color:#fff; }
+@media (max-width:767px){
+  .auswahlleiste{ display:grid; grid-template-columns:1fr auto; padding:8px 12px calc(8px + env(safe-area-inset-bottom)); }
+  .auswahlleiste > span{ grid-column:1 / -1; text-align:center; }
+}
+body.mit-auswahl{ padding-bottom:130px; }
+
+/* ---------------- PDF-Ansicht (Vollbild-Dialog) ---------------- */
+.pdf-ansicht{ width:100vw; height:100vh; height:100dvh; max-width:none; max-height:none; margin:0; padding:0; border:0; background:#475569; display:flex; flex-direction:column; }
+.pdf-ansicht:not([open]){ display:none; }
+.pdf-ansicht::backdrop{ background:rgba(15,23,42,.7); }
+.pdf-ansicht-kopf{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 12px; padding:8px 12px; padding-top:calc(8px + env(safe-area-inset-top)); background:var(--card); border-bottom:2px solid var(--primary); }
+.pdf-ansicht-titel{ display:flex; flex-direction:column; min-width:0; color:var(--primary); }
+.pdf-ansicht-titel strong{ font-family:ui-monospace,Consolas,monospace; overflow-wrap:anywhere; }
+.pdf-ansicht-status{ font-size:.78rem; color:var(--secondary); }
+.pdf-ansicht-knoepfe{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+.pdf-ansicht-zoom{ min-width:3.6em; text-align:center; font-size:.84rem; font-weight:700; color:var(--primary); }
+.pdf-ansicht-seiten{ flex:1; overflow:auto; padding:12px; display:flex; flex-direction:column; align-items:flex-start; gap:12px; -webkit-overflow-scrolling:touch; }
+.pdf-ansicht-seiten:focus{ outline:none; }
+.pdf-ansicht-seite{ margin:0 auto; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.35); flex:none; }
+.pdf-ansicht-fehler{ max-width:520px; }

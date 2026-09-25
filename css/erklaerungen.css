@@ -1,0 +1,93 @@
+/* =========================================================================
+   Hilfen „Warum / Wie / Wo finde ich das?" – Aussehen (Masterbibliothek und Formulare).
+   Textaufbau: graue Überschrift, Einleitung, Aufzählung mit fettem Stichwort.
+   ========================================================================= */
+
+.erkl{margin-top:8px;}
+
+/* ---- Umschalt-Knöpfe (verhalten sich wie Reiter) ---- */
+.erkl-knoepfe{display:flex;flex-wrap:wrap;gap:6px;}
+.erkl-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:44px;padding:6px 12px 6px 8px;
+  border:1px solid var(--border);border-radius:999px;background:var(--card);
+  color:var(--primary);font-size:.8rem;font-weight:600;cursor:pointer;
+}
+.erkl-btn:hover{border-color:var(--accent);}
+.erkl-btn-icon{
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:22px;height:22px;border-radius:50%;
+  background:#e2e8f0;color:var(--primary);font-size:.78rem;font-weight:800;
+}
+.erkl-btn-geraet{font-weight:500;color:var(--secondary);font-size:.72rem;}
+.erkl-btn-geraet::before{content:"·";margin:0 5px 0 1px;}
+.erkl-btn[aria-expanded="true"]{background:var(--primary);border-color:var(--primary);color:#fff;}
+.erkl-btn[aria-expanded="true"] .erkl-btn-icon{background:#fff;color:var(--primary);}
+.erkl-btn[aria-expanded="true"] .erkl-btn-geraet{color:#cbd5e1;}
+.erkl-btn--finden .erkl-btn-icon{background:var(--warn-bg);color:var(--warn-text);font-style:italic;font-family:Georgia,serif;}
+
+/* ---- Ansicht ---- */
+.erkl-panel{
+  margin-top:8px;padding:10px 14px 12px;
+  background:#fff;border:1px solid #e2e8f0;border-left:4px solid var(--primary);border-radius:6px;
+  font-size:.84rem;line-height:1.55;color:#1e293b;
+}
+.erkl-panel--wie{border-left-color:var(--accent);}
+.erkl-panel--finden{border-left-color:var(--warn-border);}
+.erkl-btn--wann .erkl-btn-icon{background:#e0e7ff;color:#3730a3;}
+.erkl-panel--wann{border-left-color:#6366f1;}
+.erkl-abschnitt{margin:12px 0 6px;padding-top:8px;border-top:1px solid #e2e8f0;font-size:.84rem;color:var(--primary);}
+.erkl-schluss{margin-top:10px;}
+.erkl-panel[hidden]{display:none;}
+
+.erkl-titel{margin:0 0 8px;font-size:.74rem;color:var(--secondary);}
+.erkl-intro{margin:0 0 8px;}
+.erkl-wie-kopf{display:flex;align-items:center;gap:10px;}
+.erkl-wie-kopf .icon-row{flex:none;}
+.erkl-wie-kopf .erkl-titel{margin-bottom:8px;}
+.erkl-geraet-chip{display:inline-block;margin-left:4px;padding:1px 7px;border-radius:999px;background:#e0e7ff;color:#3730a3;font-weight:700;font-size:.68rem;white-space:nowrap;}
+
+/* Aufzählung wie in der Vorlage: Stichwort fett, Erläuterung darunter */
+.erkl-liste{margin:0;padding-left:22px;list-style:disc;}
+.erkl-liste > li{margin:0 0 7px;padding-left:2px;}
+.erkl-liste > li:last-child{margin-bottom:0;}
+.erkl-liste > li > b{color:#0f172a;}
+.erkl-text{display:block;}
+.erkl-sub{margin:3px 0 0;padding-left:26px;list-style:disc;}
+.erkl-sub li{margin:1px 0;}
+
+/* RCD-Typ-Symbole (Vorlage: gerahmte Symbole direkt hinter dem Doppelpunkt) */
+.erkl-symbole{display:inline-flex;gap:5px;vertical-align:middle;margin-left:2px;}
+.erkl-sym{height:24px;width:auto;display:block;}
+
+/* Tasten/Schalterstellungen und Anschlussbuchsen */
+.erkl-taste{
+  display:inline-block;font-family:inherit;font-size:.74rem;font-weight:700;line-height:1.35;
+  padding:0 6px;margin:0 1px;border:1px solid #94a3b8;border-bottom-width:2px;border-radius:4px;
+  background:#f8fafc;color:#0f172a;white-space:nowrap;
+}
+.erkl-taste--start{background:#16a34a;border-color:#166534;color:#fff;}
+.erkl-taste--stopp{background:#dc2626;border-color:#991b1b;color:#fff;}
+.erkl-buchse{
+  display:inline-block;min-width:22px;text-align:center;font-size:.7rem;font-weight:800;line-height:1.5;
+  padding:0 5px;border-radius:999px;color:#fff;vertical-align:1px;
+}
+.erkl-buchse--l{background:#dc2626;}
+.erkl-buchse--n{background:#2563eb;}
+.erkl-buchse--pe{background:#16a34a;}
+
+.erkl-quelle{margin:10px 0 0;font-size:.68rem;color:var(--secondary);font-style:italic;}
+
+/* GER-09: gewählte Messmethode hervorheben */
+.erkl-liste li.erkl-aktiv{background:#eff6ff;border-radius:4px;box-shadow:-6px 0 0 #eff6ff,6px 0 0 #eff6ff;}
+.erkl-liste li.erkl-inaktiv{opacity:.45;}
+
+/* Global ausblendbar (Schalter "Warum & Wie") und nie im Ausdruck */
+.infokarten-versteckt .erkl{display:none;}
+@media print{ .erkl{display:none !important;} }
+
+@media (max-width:480px){
+  .erkl-btn{flex:1 1 100%;justify-content:flex-start;}
+  .erkl-panel{padding:10px 10px 12px;}
+  .erkl-liste{padding-left:18px;}
+}
